@@ -68,4 +68,34 @@ Explanation:The target is 8, and it appears in the array at indices 3 and 4,
         }
         return arr;
     }
+    /*
+    Given a sorted array of nums and an integer x,
+    write a program to find the lower bound of x.
+
+The lower bound algorithm finds the first and smallest index in a
+ sorted array where the value at that index is greater than or equal
+  to a given key i.e. x.
+
+If no such index is found, return the size of the array.
+
+Example 1:
+Input : nums= [1,2,2,3], x = 2
+
+Output:1
+
+Explanation:
+
+Index 1 is the smallest index such that arr[1] >= x.
+     */
+
+    public static int lowerBound(int[] nums, int x) {
+        int first = nums.length;
+        for (int i = 0 ; i < nums.length ; i++){
+            if (nums[i]>=x){
+                first=i;
+                break;
+            }
+        }
+        return first;
+    }
 }
