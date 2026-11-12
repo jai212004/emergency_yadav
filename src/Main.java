@@ -2,9 +2,9 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {1,6,9,12,18};
+        int[] arr = {1,6,-7};
         int[] res = searchRange(arr , 9);
-        System.out.println(search(arr , 9));
+        System.out.println(maxLen(arr));
     }
     /*
     Given an array nums of n integers.
@@ -260,4 +260,49 @@ Explanation: The target integer 2 does not exist in nums so return -1
     }
     /*bs
      */
+    /*
+    Largest Subarray with Sum 0
+
+
+24
+
+Core
+
+Companies
+You are given an integer array arr of size n which contains both positive and negative integers.
+ Your task is to find the length of the longest contiguous subarray with sum equal to 0.
+
+Return the length of such a subarray. If no such subarray exists, return 0.
+
+Example 1:
+Input: arr = [15, -2, 2, -8, 1, 7, 10, 23]
+
+Output: 5
+
+Explanation:
+
+The subarray [-2, 2, -8, 1, 7] sums up to 0 and has the maximum length among all such subarrays.
+     */
+    public static int maxLen(int[] arr) {
+        int maxlen = 0;
+        int currentlen = 0;
+        int sum = 0;
+            for(int i = 0 ; i < arr.length ; i++){
+                for(int j = i ; j < arr.length ; j++){
+                    sum=sum+arr[j];
+                    if(sum==0){
+                        currentlen=j-i+1;
+                        if(currentlen>maxlen){
+                            maxlen=currentlen;
+                        }
+
+                    }
+                }
+                sum=0;
+            }
+        return maxlen;
+            /*
+            brute force sum0
+             */
+    }
 }
