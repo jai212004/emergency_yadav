@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         int[] arr = {1,6,9,12,18};
         int[] res = searchRange(arr , 9);
-        System.out.println(search(arr , 90));
+        System.out.println(search(arr , 9));
     }
     /*
     Given an array nums of n integers.
@@ -242,4 +242,22 @@ Explanation: The target integer 2 does not exist in nums so return -1
         /*
         binary search
          */
+        public int search(int[] nums, int target , int left , int right) {
+            if(left>right){
+                return -1;
+            }
+            int mid = (left+right)/2;
+            if(target>nums[mid]){
+                return search(nums , target , mid+1 , right);
+            }else if(target<nums[mid]){
+                return search(nums , target , left , mid-1);
+            }else{
+                return mid;
+            }
+        }
+    public int recsearch(int[] nums, int target) {
+            return search(nums , target , 0 , nums.length-1);
+    }
+    /*bs
+     */
 }
