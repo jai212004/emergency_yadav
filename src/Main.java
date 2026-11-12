@@ -2,10 +2,12 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {5, 7, 7, 8, 8, 10 , 7};
-        int[] res = searchRange(arr , 7);
-        System.out.println(res[0]);
-        System.out.println(res[1]);
+        int[] arr = {3, 4, 4, 7 , 7, 8, 10};
+        int[] res = searchRange(arr , 5);
+        int[] arrr = getFloorAndCeil(arr, 2);
+        for(int a : arrr){
+            System.out.println(a);
+        }
     }
     /*
     Given an array nums of n integers.
@@ -98,4 +100,76 @@ Index 1 is the smallest index such that arr[1] >= x.
         }
         return first;
     }
+    /*
+    Given a sorted array of nums and an integer x,
+     write a program
+    to find the upper bound of x.
+
+The upper bound of x is defined as the smallest
+ index i such that nums[i] > x.
+
+If no such index is found, return the size of the array.
+
+Example 1:
+Input : n= 4, nums = [1,2,2,3], x = 2
+
+Output:3
+
+Explanation:
+
+Index 3 is the smallest index such that arr[3] > x.
+     */
+        public static int upperBound(int[] nums, int x) {
+            int first = nums.length;
+            for (int i = 0 ; i < nums.length ; i++){
+                if (nums[i]>x) {
+                    first = i;
+                    break;
+                }
+            }
+            return first;
+        }
+        /*
+        brute
+         */
+
+        /*
+        Given a sorted array nums and an integer x.
+         Find the floor and ceil of x in nums.
+          The floor of x is the largest element in the array which is smaller than or equal to x.
+           The ceiling of x is the smallest element in the array greater than or equal to x.
+         If no floor or ceil exists, output -1.
+         Example 1:
+         Input : nums =[3, 4, 4, 7, 8, 10], x= 5
+        Output: 4 7
+        Explanation: The floor of 5 in the array is 4, and the ceiling of 5 in the array is 7.
+         */
+        public static int[] getFloorAndCeil(int[] nums, int x) {
+            int[] arr = new int[2];
+            int floor = -1;
+            int ceiling = Integer.MAX_VALUE;
+            boolean flag = false;
+            for(int i = 0 ; i < nums.length ; i++){
+                if(nums[i]<x && nums[i]>floor){
+                    floor=nums[i];
+                }else if(nums[i]>x && nums[i]<ceiling){
+                    ceiling=nums[i];
+                    flag=true;
+                }else if(nums[i]==x){
+                    ceiling=x;
+                    floor=x;
+                    flag=true;
+                }
+            }
+            arr[0] = floor;
+            if(flag){
+                arr[1] = ceiling;
+            }else{
+                arr[1] = -1;
+            }
+            return arr;
+        }
+        /*
+        brute
+         */
 }
