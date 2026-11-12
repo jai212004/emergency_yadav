@@ -2,12 +2,9 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {3, 4, 4, 7 , 7, 8, 10};
-        int[] res = searchRange(arr , 5);
-        int[] arrr = getFloorAndCeil(arr, 2);
-        for(int a : arrr){
-            System.out.println(a);
-        }
+        int[] arr = {1,6,9,12,18};
+        int[] res = searchRange(arr , 9);
+        System.out.println(search(arr , 90));
     }
     /*
     Given an array nums of n integers.
@@ -171,5 +168,78 @@ Index 3 is the smallest index such that arr[3] > x.
         }
         /*
         brute
+         */
+    /*
+    Given a sorted array of nums consisting of distinct integers and a target value,
+    return the index if the target is found.
+     If not, return the index where it would be if it were inserted in order.
+
+Example 1:
+Input: nums = [1, 3, 5, 6], target = 5
+
+Output: 2
+
+Explanation: The target value 5 is found at index 2 in the sorted array.
+Hence, the function returns 2.
+     */
+        public static int searchInsert(int[] nums, int target) {
+            int pos = -1;
+            for(int i = 0 ; i < nums.length ; i++){
+                if(nums[0]>=target) {
+                    pos = 0;
+                }
+                else if(nums[nums.length-1]<target){
+                    pos = nums.length;
+                }
+                else {
+                    if(nums[i]<target && nums[i+1]>=target){
+                        pos=i+1;
+                    }
+                }
+            }
+            return pos;
+        }
+        /*
+        Search X in sorted array
+
+Basic
+Given a sorted array of integers nums with 0-based indexing, find the index of a specified target integer. If the target is found in the array, return its index. If the target is not found, return -1.
+
+Example 1:
+Input: nums = [-1,0,3,5,9,12], target = 9
+
+Output: 4
+
+Explanation: The target integer 9 exists in nums and its index is 4
+
+Example 2:
+Input: nums = [-1,0,3,5,9,12], target = 2
+
+Output: -1
+
+Explanation: The target integer 2 does not exist in nums so return -1
+         */
+        public static int search(int[] nums, int target) {
+            int left = 0;
+            int right = nums.length-1;
+            int mid = -1;
+            while(left<=right){
+                mid = (left+right)/2;
+                if(target<nums[mid]){
+                    right=mid-1;
+                }else if(target>nums[mid]){
+                    left=mid+1;
+                }else if(target==nums[mid]){
+                    break;
+                }
+            }
+            if(nums[mid]==target){
+                return mid;
+            }else{
+                return -1;
+            }
+        }
+        /*
+        binary search
          */
 }
