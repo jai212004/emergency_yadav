@@ -2,12 +2,10 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {17,12,-8,-11,14,-19,9,-4,-11,-12,-8,5,15,14,9,-19,12,5,0,18,13,-1,3,19,16,-13,-11,9};
-        Arrays.sort(arr);
-        for(int i : arr){
-            System.out.println(i);
-        }
-        System.out.println(longestConsecutive(arr));
+        int[] arr = {5, 7, 7, 8, 8, 10 , 7};
+        int[] res = searchRange(arr , 7);
+        System.out.println(res[0]);
+        System.out.println(res[1]);
     }
     /*
     Given an array nums of n integers.
@@ -39,5 +37,35 @@ of the elements in the array.
                 }
             }
         return longest_queue+1;
+    }
+
+    /*
+    Given an array of integers nums sorted in non-decreasing order,
+     find the starting and ending position of a given target value.
+      If the target is not found in the array, return [-1, -1].
+
+Example 1:
+Input: nums = [5, 7, 7, 8, 8, 10], target = 8
+
+Output: [3, 4]
+
+Explanation:The target is 8, and it appears in the array at indices 3 and 4,
+ so the output is [3,4]
+     */
+    public static int[] searchRange(int[] nums, int target) {
+        int[] arr = new int[]{-1,-1};
+        for(int i = 0 ; i < nums.length ; i++){
+            if(nums[i]==target){
+                arr[0]=i;
+                break;
+            }
+        }
+        for(int i = nums.length-1 ; i >= 0 ; i--){
+            if(nums[i]==target){
+                arr[1]=i;
+                break;
+            }
+        }
+        return arr;
     }
 }
