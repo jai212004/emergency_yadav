@@ -1,10 +1,12 @@
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {1,6,-7};
-        int[] res = searchRange(arr , 9);
-        System.out.println(maxLen(arr));
+        int[] arr = {4, 2, 2 , 0 , 2 , 6, 4};
+        //int[] res = searchRange(arr , 6);
+        System.out.println(subarraysWithXorK(arr , 2));
+        System.out.println(subarraywithxor(arr , 2));
     }
     /*
     Given an array nums of n integers.
@@ -304,5 +306,146 @@ The subarray [-2, 2, -8, 1, 7] sums up to 0 and has the maximum length among all
             /*
             brute force sum0
              */
+    }
+    public static int longestSubarray(int[] nums, int k) {
+        int maxlen = 0;
+        int currentlen = 0;
+        int sum = 0;
+        for(int i = 0 ; i < nums.length ; i++){
+            for(int j = i ; j < nums.length ; j++){
+                sum=sum+nums[j];
+                if(sum==k){
+                    currentlen=j-i+1;
+                    if(currentlen>maxlen){
+                        maxlen=currentlen;
+                    }
+
+                }
+            }
+            sum=0;
+        }
+        return maxlen;
+            /*
+            brute force sum0
+             */
+    }
+    /*
+    count no of arrays with sum k
+     */
+    public static int subarraySum(int[] nums, int k) {
+        int count=0;
+        int sum=0;
+        for(int i = 0 ; i < nums.length ; i++){
+            for(int j = i ; j < nums.length ; j++){
+                sum=sum+nums[j];
+                if(sum==k){
+                    count++;
+                }
+            }
+            sum=0;
+        }
+        return count;
+    }
+    /*
+    subarray sum using prefix sum
+     */
+    public static int subarraySum2(int[] nums, int k){
+        int sum = 0;
+        int count = 0;
+        HashMap<Integer , Integer> hs = new HashMap<>();
+        hs.put(0,1);
+        for(int i = 0 ; i < nums.length ; i++){
+            sum = sum+nums[i];
+            if(hs.containsKey(sum-k)){
+                count=count+hs.get(sum-k);
+            }
+            if(hs.containsKey(sum)){
+                hs.put(sum, hs.get(sum)+1);
+            }else{
+                hs.put(sum , 1);
+            }
+        }
+        return count;
+    }
+    public static int retSumSub(int[] arr , int k){
+        HashMap<Integer , Integer> hs = new HashMap<>();
+        int sum = 0;
+        int count = 0;
+        hs.put(0 , 1);
+        for(int i = 0 ; i < arr.length ; i++){
+            sum=sum+arr[i];
+            if(hs.containsKey(sum-k)){
+                count=count+hs.get(sum-k);
+            }
+            if(hs.containsKey(sum)){
+                hs.put(sum , hs.get(sum)+1);
+            }else{
+                hs.put(sum , 1);
+            }
+        }
+        return count;
+    }
+    /*
+    Given an array of integers nums and an integer k,
+     return the total number of subarrays whose XOR equals to k.
+
+Example 1:
+Input : nums = [4, 2, 2, 6, 4], k = 6
+
+Output : 4
+
+Explanation : The subarrays having XOR of their elements as 6 are [4, 2],
+ [4, 2, 2, 6, 4], [2, 2, 6], and [6]
+     */
+    public static int subarraysWithXorK(int[] nums, int k) {
+        int xor = 0;
+        int count = 0;
+        for(int i = 0 ; i < nums.length ; i++){
+            for (int j = i ; j < nums.length ; j++){
+                xor = xor ^ nums[j];
+                if(xor==k){
+                    count++;
+                }
+            }
+            xor=0;
+        }
+        return count;
+    }
+    public static int subarraywithxor(int[] nums , int k){
+        HashMap<Integer , Integer> hs = new HashMap<>();
+        hs.put(0,1);
+        int xor = 0;
+        int count = 0;
+        for(int i = 0 ; i < nums.length ; i++){
+            xor = xor^nums[i];
+            if(hs.containsKey(xor^k)){
+                count=count+hs.get(xor^k);
+            }
+            if(hs.containsKey(xor)){
+                hs.put(xor, hs.get(xor)+1);
+            }else{
+                hs.put(xor , 1);
+            }
+        }
+        return count;
+    }
+
+    public static int subarrSum(int[] nums , int k){
+        HashMap<Integer , Integer> hs = new HashMap<>();
+        hs.put(0 , 1);
+        int sum = 0;
+        int count = 0;
+        for(int i = 0 ; i < nums.length ; i++){
+            sum = sum + nums[i];
+            if(hs.containsKey(sum-k)){
+                count = count + hs.get(sum-k);
+            }
+            if(hs.containsKey(sum)){
+                hs.put(sum, hs.get(sum)+1);
+            }else{
+                hs.put(sum , 1);
+            }
+        }
+        return count;
     }
 }
