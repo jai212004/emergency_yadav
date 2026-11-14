@@ -1,12 +1,13 @@
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {4, 2, 2 , 0 , 2 , 6, 4};
+        int[] arr = {0, 0, 1, 1, 1, 2, 3};
         //int[] res = searchRange(arr , 6);
-        System.out.println(subarraysWithXorK(arr , 2));
-        System.out.println(subarraywithxor(arr , 2));
+        //System.out.println(countOccurrences(arr , 1));
+        System.out.println(countOccurences(arr , 1));
     }
     /*
     Given an array nums of n integers.
@@ -444,6 +445,120 @@ Explanation : The subarrays having XOR of their elements as 6 are [4, 2],
                 hs.put(sum, hs.get(sum)+1);
             }else{
                 hs.put(sum , 1);
+            }
+        }
+        return count;
+    }
+    /*
+    Single element in sorted array
+
+Core
+Given an array nums sorted in non-decreasing order.
+ Every number in the array except one appears twice.
+  Find the single number in the array.
+
+Example 1:
+Input :nums = [1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6]
+
+Output:4
+
+Explanation: Only the number 4 appears once in the array.
+     */
+    public static int singleNonDuplicate(int[] nums) {
+        int res = 0;
+        HashMap<Integer , Integer> hs = new HashMap<>();
+        for (int i = 0 ; i < nums.length ; i++) {
+            if (hs.containsKey(nums[i])) {
+                hs.put(nums[i], hs.get(nums[i]) + 1);
+            } else {
+                hs.put(nums[i], 1);
+            }
+        }
+        for(int i = 0 ; i < nums.length ; i++){
+            if(hs.get(nums[i])==1){
+                res=nums[i];
+                break;
+            }
+        }
+        return res;
+    }
+    public static int singleNonDuplicate2(int[] nums){
+        int xor = 0;
+        for(int i = 0 ; i < nums.length ; i++){
+            xor = xor^nums[i];
+        }
+        return xor;
+    }
+
+    public static int singleNonDuplicate3(int[] nums){
+        if(nums.length==1){
+            return nums[0];
+        }
+        if(nums[0]!=nums[1]){
+            return nums[0];
+        }
+        if(nums[nums.length-1]!=nums[nums.length-2]){
+            return nums[nums.length-1];
+        }
+        int left = 1;
+        int right = nums.length-2;
+        while(left<=right){
+            int mid = (left+right)/2;
+            if(nums[mid]!=nums[mid-1] && nums[mid]!=nums[mid+1]){
+                return nums[mid];
+            }
+            if((mid%2==0 && nums[mid]==nums[mid+1]) || (mid%2==1 && nums[mid]==nums[mid-1])){
+                left = mid+1;
+            }else if((mid%2==1 && nums[mid]==nums[mid+1]) || (mid%2==0 && nums[mid]==nums[mid-1])){
+                right = mid-1;
+            }
+        }
+        return -1;
+    }
+    /*
+    You are given a sorted array of integers arr and an integer target.
+    Your task is to determine how many times target appears in arr.
+
+Return the count of occurrences of target in the array.
+
+Example 1:
+Input: arr = [0, 0, 1, 1, 1, 2, 3], target = 1
+
+Output: 3
+
+Explanation: The number 1 appears 3 times in the array.
+     */
+    public static int countOccurrences(int[] arr, int target) {
+        int count = 0;
+        for(int i = 0 ; i < arr.length ; i++){
+            if(arr[i]==target){
+                count++;
+            }
+        }
+        return count;
+    }//sorted not being used
+    public static int countOccurences(int[] arr , int target){
+        int left = 0;
+        int right = arr.length-1;
+        int res = 0;
+        int count = 0;
+        while(left<=right){
+            int mid = (left+right)/2;
+            if(target==arr[mid]){
+                res = mid;
+                right=mid-1;
+            }else if(target<arr[mid]){
+                right = mid-1;
+            }else if(target>arr[mid]){
+                left = mid+1;
+            }
+        }
+        System.out.println(res);
+        for(int i = res ; res < arr.length ; res++){
+            if(arr[i]==target){
+                count++;
+            }else{
+                break;
             }
         }
         return count;
