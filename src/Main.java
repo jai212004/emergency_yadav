@@ -4,16 +4,14 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {4,9,13,20,25,31};
+        int[] arr = {805306368,805306368,805306368};
         //int[] res = searchRange(arr , 6);
         //System.out.println(countOccurrences(arr , 1));
 //        System.out.println(firstcountOccurences(arr , 1));
 //        System.out.println(lastountOccurences(arr , 1));
 //        System.out.println(countsingle(arr));
-        System.out.println(smallestDivisor(arr , 10));
-        for(int i = 1 ; i <= 31 ; i++){
-            System.out.println(i + "->" + sum(arr , i));
-        }
+//        System.out.println(smallestDivisor(arr , 10));
+        System.out.println(minimumRateToEatBananas(arr , 1000000000));
     }
     /*
     Given an array nums of n integers.
@@ -676,22 +674,61 @@ Explanation: If we choose 1, we get 17 as the sum.
         int mid = (left+right)/2;
         while (left<=right){
             mid = (left+right)/2;
-            if(sum(nums , mid)<=limit){
+            if(sum1(nums , mid)<=limit){
                 right = mid-1;
-            }else if(sum(nums , mid)>limit){
+            }else if(sum1(nums , mid)>limit){
                 left = mid+1;
             }
         }
         return left;
     }
 
-    public static int sum(int[] nums , int mid){
-        int sum = 0;
+    public static long sum1(int[] nums , int mid){
+        long sum = 0;
         for(int i = 0 ; i < nums.length ; i++){
-            sum = sum + (int)Math.ceil((double)nums[i]/mid);
+            sum += (nums[i] + mid - 1) / mid;
         }
         return sum;
     }
+     /*
+    A monkey is given n piles of bananas, where the 'ith' pile has nums[i] bananas.
+     An integer h represents the total time in hours to eat all the bananas.
 
+Each hour, the monkey chooses a non-empty pile of bananas and eats k bananas.
+ If the pile contains fewer than k bananas, the monkey eats all the bananas in that pile and does not consume any more bananas in that hour.
 
+Determine the minimum number of bananas the monkey must eat per hour to finish all the bananas within h hours.
+
+Example 1:
+Input: n = 4, nums = [7, 15, 6, 3], h = 8
+
+Output: 5
+
+Explanation: If Koko eats 5 bananas/hr, he will take 2, 3, 2, and 1 hour to eat the piles accordingly.
+ So, he will take 8 hours to complete all the piles.
+     */
+     public static int minimumRateToEatBananas(int[] nums, int h) {
+         long max = Integer.MIN_VALUE;
+         for(int i = 0 ; i < nums.length ; i++){
+             max = Integer.max((int) max , nums[i]);
+         }
+         int left = 1;
+         int right = (int)max;
+         while(left<=right){
+           int mid = (left+right)/2;
+           if(sum(nums , mid)<=h){
+               right = mid-1;
+           }else if(sum(nums , mid)>h){
+               left = mid+1;
+           }
+         }
+         return left;
+     }
+     public static long sum(int[] arr , int mid){
+         long sum = 0;
+         for(int i = 0 ; i < arr.length ; i++){
+             sum += (arr[i] + mid - 1) / mid;
+         }
+         return sum;
+     }
 }
