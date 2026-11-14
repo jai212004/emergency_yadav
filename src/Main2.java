@@ -1,0 +1,28 @@
+public class Main2 {
+    public static int sum(int[] arr , int mid){
+        int sum = 0;
+        for(int i = 0 ; i < arr.length ; i++){
+            sum = sum + (int)Math.ceil((double)arr[i]/mid);
+        }
+        return sum;
+    }
+
+    public static int smalldiv(int[] arr , int limit){
+        int max = Integer.MIN_VALUE;
+        for(int i = 0 ; i < arr.length ; i++){
+            max = Integer.max(max , arr[i]);
+        }
+        int left = 1;
+        int right = max;
+        int mid = (left+right)/2;
+        while(left<=right){
+            mid = (left+right)/2;
+            if(sum(arr , mid)<=limit){
+                right = mid - 1;
+            }else if(sum(arr , mid)>limit){
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+}
