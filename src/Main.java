@@ -1,17 +1,20 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {805306368,805306368,805306368};
+        Integer[] arr = {3,4,5,6,7,0,1,2};
+        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(arr));
+        System.out.println(findKRotation(arrayList));
         //int[] res = searchRange(arr , 6);
         //System.out.println(countOccurrences(arr , 1));
 //        System.out.println(firstcountOccurences(arr , 1));
 //        System.out.println(lastountOccurences(arr , 1));
 //        System.out.println(countsingle(arr));
 //        System.out.println(smallestDivisor(arr , 10));
-        System.out.println(minimumRateToEatBananas(arr , 1000000000));
+//        System.out.println(minimumRateToEatBananas(arr , 1000000000));
     }
     /*
     Given an array nums of n integers.
@@ -730,5 +733,40 @@ Explanation: If Koko eats 5 bananas/hr, he will take 2, 3, 2, and 1 hour to eat 
              sum += (arr[i] + mid - 1) / mid;
          }
          return sum;
+     }
+     /*
+     Find out how many times the array is rotated
+
+Core
+Given an integer array nums of size n, sorted in ascending order with distinct values.
+ The array has been right rotated an unknown number of times, between 0 and n-1 (including).
+  Determine the number of rotations performed on the array.
+
+Example 1:
+Input : nums = [4, 5, 6, 7, 0, 1, 2, 3]
+
+Output: 4
+
+Explanation: The original array should be [0, 1, 2, 3, 4, 5, 6, 7].
+ So, we can notice that the array has been rotated 4 times.
+      */
+     public static int findKRotation(ArrayList<Integer> nums) {
+         if(getindex(nums)==nums.size()-1){
+             return 0;
+         }else{
+             return getindex(nums)+1;
+         }
+     }
+
+     public static int getindex(ArrayList<Integer> nums){
+         int index = 0;
+         int max = Integer.MIN_VALUE;
+         for(int i = 0 ; i < nums.size() ; i++){
+             if(nums.get(i)>max){
+                 max=nums.get(i);
+                 index = i;
+             }
+         }
+         return index;
      }
 }
