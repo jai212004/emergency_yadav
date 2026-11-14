@@ -4,12 +4,16 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {0, 0, 1, 1, 1, 2, 3};
+        int[] arr = {4,9,13,20,25,31};
         //int[] res = searchRange(arr , 6);
         //System.out.println(countOccurrences(arr , 1));
-        System.out.println(firstcountOccurences(arr , 1));
-        System.out.println(lastountOccurences(arr , 1));
-        System.out.println(carrier(arr , 3));
+//        System.out.println(firstcountOccurences(arr , 1));
+//        System.out.println(lastountOccurences(arr , 1));
+//        System.out.println(countsingle(arr));
+        System.out.println(smallestDivisor(arr , 10));
+        for(int i = 1 ; i <= 31 ; i++){
+            System.out.println(i + "->" + sum(arr , i));
+        }
     }
     /*
     Given an array nums of n integers.
@@ -509,9 +513,9 @@ Explanation: Only the number 4 appears once in the array.
             if(nums[mid]!=nums[mid-1] && nums[mid]!=nums[mid+1]){
                 return nums[mid];
             }
-            if((mid%2==0 && nums[mid]==nums[mid+1]) || (mid%2==1 && nums[mid]==nums[mid-1])){
+            if(((mid%2==0) && (nums[mid]==nums[mid+1])) || ((mid%2==1) && (nums[mid]==nums[mid-1]))){
                 left = mid+1;
-            }else if((mid%2==1 && nums[mid]==nums[mid+1]) || (mid%2==0 && nums[mid]==nums[mid-1])){
+            }else if(((mid%2==1) && (nums[mid]==nums[mid+1])) || ((mid%2==0) && (nums[mid]==nums[mid-1]))){
                 right = mid-1;
             }
         }
@@ -584,4 +588,108 @@ Explanation: The number 1 appears 3 times in the array.
         }
     }
     //optimal solution
+
+    public static int countsingle(int[] arr){
+        if(arr.length==1){
+            return arr[0];
+        }if(arr[0]!=arr[1]){
+            return arr[0];
+        }if(arr[arr.length-1]!=arr[arr.length-2]){
+            return arr[arr.length-1];
+        }
+        int left = 1;
+        int right = arr.length-2;
+        int mid = (left+right)/2;
+        while(left<=right){
+            mid = (left+right)/2;
+            if(arr[mid]!=arr[mid-1] && arr[mid]!=arr[mid+1]){
+                return arr[mid];
+            }else if((mid%2==0) && (arr[mid+1]==arr[mid]) || ((mid%2==1) && (arr[mid]==arr[mid-1]))){
+                left=mid+1;
+            }else if((mid%2==1) && (arr[mid]==arr[mid+1]) || (mid%2==0)&&(arr[mid]==arr[mid-1])){
+                right=mid-1;
+            }
+        }
+        return -1;
+    }
+    /*
+    Given an array of integers nums and an integer limit as the threshold value, find the smallest positive integer divisor such that upon dividing all the elements of the array by this divisor, the sum of the division results is less than or equal to the threshold value.
+
+After dividing each element by the chosen divisor, take the ceiling of the result (i.e., round up to the next whole number).
+
+Example 1:
+Input: nums = [1, 2, 3, 4, 5], limit = 8
+
+Output: 3
+
+Explanation: We can get a sum of 15(1 + 2 + 3 + 4 + 5) if we choose 1 as a divisor.
+
+The sum is 9(1 + 1 + 2 + 2 + 3) if we choose 2 as a divisor.
+ Upon dividing all the elements of the array by 3,
+ we get 1,1,1,2,2 respectively. Now, their sum is equal to 7 <= 8 i.e.
+  the threshold value. So, 3 is the minimum possible answer.
+
+Example 2:
+Input: nums = [8,4,2,3], limit = 10
+
+Output: 2
+
+Explanation: If we choose 1, we get 17 as the sum.
+ If we choose 2, we get 9 (4+2+1+2) <= 10 as the answer.
+  So, 2 is the answer.
+     */
+    public static int smallestDivisor1(int[] nums, int limit) {
+        int divisor = 1;
+        int max1 = Integer.MIN_VALUE;
+        for(int i = 0 ; i < nums.length ; i++){
+            max1 = Integer.max(max1 , nums[i]);
+        }
+        while(divisor<=max1){
+            int sum = 0;
+            for(int i = 0 ; i < nums.length ; i++){
+                sum = sum + (int)Math.ceil((double)nums[i]/divisor);
+            }
+            //System.out.println(sum);
+            if(sum<=limit){
+                break;
+            }else{
+                divisor++;
+                sum=0;
+            }
+        }
+        return divisor;
+    }
+    //brute
+    public static int smallestDivisor(int[] nums, int limit) {
+        int max = Integer.MIN_VALUE;
+        int count = 1;
+        for(int i = 0 ; i < nums.length ; i++){
+            max = Integer.max(max , nums[i]);
+        }
+//        int[] arr = new int[max];
+//        for(int i = 0 ; i < arr.length ; i++){
+//            arr[i] = count;
+//            count++;
+//        }
+        int left = 1;
+        int right = max;
+        int mid = (left+right)/2;
+        while (left<=right){
+            mid = (left+right)/2;
+            if(sum(nums , mid)<=limit){
+                right = mid-1;
+            }else if(sum(nums , mid)>limit){
+                left = mid+1;
+            }
+        }
+        return left;
+    }
+
+    public static int sum(int[] nums , int mid){
+        int sum = 0;
+        for(int i = 0 ; i < nums.length ; i++){
+            sum = sum + (int)Math.ceil((double)nums[i]/mid);
+        }
+        return sum;
+    }
 }
