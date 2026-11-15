@@ -851,4 +851,15 @@ Explanation: Here, the target is 3.
          }
          return -1;
      }
+
+    public boolean searchInARotatedSortedArrayII(int[] nums, int k) {
+         boolean res = false;
+         for(int i = 0 ; i<nums.length ; i++){
+             if(k==nums[i]){
+                 res=true;
+                 break;
+             }
+         }
+         return res;
+    }
 }
