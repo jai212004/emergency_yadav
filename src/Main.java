@@ -5,8 +5,15 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {3, 4, 5, 1, 2};
-        System.out.println(search1(arr , 2));
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 5, 1};
+//        System.out.println(arr[0]);
+//        System.out.println(arr[40]);
+//        System.out.println(arr[63]);
+//        System.out.println(arr[65]);
+//        int [] arrr = twoSum2(arr , -14);
+//        System.out.println(arrr[0]);
+//        System.out.println(arrr[1]);
+        System.out.println(findPeakElement(arr));
     }
     /*
     Given an array nums of n integers.
@@ -885,5 +892,99 @@ Explanation: Here, the target is 3.
              }
          }
          return -1;
+    }
+    /*
+    Given an array of integers nums and an integer target.
+     Return the indices(0 - indexed) of two elements in nums such that they add up to target.
+
+Each input will have exactly one solution, and the same element cannot be used twice.
+ Return the answer in any order.
+
+Example 1:
+Input: nums = [1, 6, 2, 10, 3], target = 7
+
+Output: [0, 1]
+
+Explanation:
+
+nums[0] + nums[1] = 1 + 6 = 7
+     */
+    public static int[] twoSum(int[] nums, int target) {
+        int[] arr = new int[2];
+        int res = 0;
+        HashMap<Integer , Boolean> hs = new HashMap<>();
+        for(int i = 0 ; i < nums.length ; i++){
+            if(!hs.containsKey(nums[i])){
+                hs.put(nums[i] , true);
+            }
+        }
+        for(int i = 0 ; i < nums.length ; i++){
+            //target is -3 , 6 comes now -9 is needed , if -9 comes will it be checked ?
+            //target is 6 , 3 comes now 3 is needed , if 3 comes will it be checked
+            //target is -6 , 9 comes now -15 is needed
+            if(hs.containsKey(target-nums[i]) && target-nums[i]!=nums[i]){
+                arr[0]=i;
+                break;
+            }
+        }
+        for(int i = 0 ; i < nums.length ; i++){
+            if(nums[i]==(target-nums[arr[0]])){
+                arr[1]=i;
+                break;
+            }
+        }
+        System.out.println(arr[0]);
+        System.out.println(arr[1]);
+        return arr;
+    }
+    public static int[] twoSum2(int[] nums, int target) {
+        int[] arr = new int[2];
+        int res = 0;
+        HashMap<Integer, Integer> hs = new HashMap<>();
+        for(int i = 0 ; i < nums.length ; i++){
+            hs.putIfAbsent(nums[i] , i);
+        }
+        for(int i = 0 ; i < nums.length ; i++){
+            int comp = target - nums[i];
+            if(hs.containsKey(comp) && hs.get(comp)!=i){
+                arr[0]=i;
+                arr[1]=hs.get(comp);
+            }
+        }
+        return arr;
+    }
+    /*
+    Given an array arr of integers. A peak element is defined as an element greater than both of its neighbors.
+
+Formally, if arr[i] is the peak element, arr[i - 1] < arr[i] and arr[i + 1] < arr[i].
+
+Find the index(0-based) of a peak element in the array. If there are multiple peak numbers, return the index of any peak number.
+
+Note:
+
+As there can be many peak values, "true" is given as output if the returned index is a peak number, otherwise the returned value of index.
+The first and last elements of the array can also be considered peak elements. For boundary elements, assume the missing neighbor is smaller than any possible element in the array.
+Example 1:
+Input : arr = [1, 2, 3, 4, 5, 6, 7, 8, 5, 1]
+
+Output: 7
+
+Explanation: In this example, there is only 1 peak that is at index 7.
+     */
+    public static int findPeakElement(int[] arr) {
+        if(arr.length==1){
+            return 0;
+        }
+        if(arr[0]>arr[1]){
+            return 0;
+        }else if(arr[arr.length-1]>arr[arr.length-2]){
+            return arr.length-1;
+        }
+        for(int i = 1 ; i < arr.length-1 ; i++){
+            if(arr[i]>arr[i-1] && arr[i]>arr[i+1]){
+                return i;
+            }
+        }
+        return -1;
     }
 }
