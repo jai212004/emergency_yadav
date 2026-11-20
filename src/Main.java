@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.lang.Math.floor;
+
 public class Main {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 5, 1};
@@ -13,7 +15,10 @@ public class Main {
 //        int [] arrr = twoSum2(arr , -14);
 //        System.out.println(arrr[0]);
 //        System.out.println(arrr[1]);
-        System.out.println(findPeakElement(arr));
+       // System.out.println(findPeakElement(arr));
+        System.out.println(floorSqrt(234));
+        System.out.println(power(5,2));
+        System.out.println(NthRoot(7 , 49));
     }
     /*
     Given an array nums of n integers.
@@ -983,6 +988,71 @@ Explanation: In this example, there is only 1 peak that is at index 7.
         for(int i = 1 ; i < arr.length-1 ; i++){
             if(arr[i]>arr[i-1] && arr[i]>arr[i+1]){
                 return i;
+            }
+        }
+        return -1;
+    }
+    /*
+    Given a positive integer n.
+    Find and return its square root.
+     If n is not a perfect square,
+      then return the floor value of sqrt(n).
+Example 1:
+Input: n = 36
+
+Output: 6
+
+Explanation: 6 is the square root of 36.
+     */
+    public static int floorSqrt(int n) {
+        int left = 1;
+        int right = n;
+        int mid = (left+right)/2;
+        long sq = ((long) mid *mid);
+        while(left<=right){
+            mid = left + (right - left) / 2;
+            sq = ((long) mid *mid);
+            if(sq==n){
+                return mid;
+            }else if(sq<n){
+                left = mid+1;
+            }else if(sq>n){
+                right = mid-1;
+            }
+        }
+        if(sq>n){
+            return mid-1;
+        }else{
+            return mid;
+        }
+    }
+
+    public static int power(int i , int n){
+        long result = 1;
+        while(n!=0){
+            if(n%2==0){
+                i=(int) ((long)i*i);
+                n=n/2;
+            }else if(n%2==1){
+                result=result*i;
+                n--;
+            }
+        }
+        return (int)result;
+    }
+    public static int NthRoot(int N, int M) {
+        int left = 1;
+        int right = M;
+        int mid = (left + right) / 2;
+        while (left <= right) {
+            mid = left + (right - left) / 2;
+            long pw = power(mid, N);
+            if (pw == M) {
+                return mid;
+            } else if (pw > M) {
+                right = mid - 1;
+            } else if (pw < M) {
+                left = mid + 1;
             }
         }
         return -1;
