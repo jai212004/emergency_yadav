@@ -1173,4 +1173,71 @@ last 3 flowers would have already bloomed. So, we can easily make 2 bouquets, on
         }
         return noofbouqet;
     }
+    /*
+    You are given an array weights where weights[i]
+    represents the weight of the i-th package on a conveyor belt.
+     All the packages must be shipped in the order
+      given from one port to another within days.
+
+Each day,
+ the ship can carry a contiguous sequence of packages,
+  as long as the total weight does not exceed its maximum capacity.
+
+Your task is to find the minimum possible capacity
+ of the ship so that all packages can be shipped within
+  the given number of days.
+
+Example 1:
+Input: weights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], days = 5
+
+Output: 15
+
+Explanation:
+
+Minimum ship capacity = 15. One way to ship in 5 days:
+
+Day 1: 1 + 2 + 3 + 4 + 5 = 15
+Day 2: 6 + 7 = 13
+Day 3: 8
+Day 4: 9
+Day 5: 10
+No day exceeds capacity 15 and all packages are shipped in order in 5 days.
+     */
+    public int shipWithinDays(int[] weights, int days) {
+        int max = Integer.MIN_VALUE;
+        int sum = 0;
+        for(int i = 0 ; i < weights.length ; i++){
+            if(weights[i]>max){
+                max=weights[i];
+            }
+            sum = sum + weights[i];
+        }
+        int left = max;
+        int right = sum;
+        int mid = (left+right)/2;
+        while(left<=right){
+            mid = (left+right)/2;
+            int res = checkIt(weights , mid);
+            if(res>days){
+                left=mid+1;
+            }else{
+                right=mid-1;
+            }
+        }
+        return left;
+    }
+
+    public static int checkIt(int[] weights , int cap){
+        int days = 0;
+        int sum = 0;
+        for(int i = 0 ; i < weights.length ; i++){
+            if(sum + weights[i]>cap){
+                days++;
+                sum=weights[i];
+            }else{
+                sum=sum+weights[i];
+            }
+        }
+        return days+1;
+    }
 }
