@@ -7,7 +7,7 @@ import static java.lang.Math.floor;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {7, 7, 14, 7, 13, 11, 12, 7 , 12};
+        int[] arr = {3, 5, 7, 10};
 //        System.out.println(arr[0]);
 //        System.out.println(arr[40]);
 //        System.out.println(arr[63]);
@@ -19,7 +19,8 @@ public class Main {
 //        System.out.println(floorSqrt(234));
 //        System.out.println(power(5,2));
 //        System.out.println(NthRoot(3, 27));
-        System.out.println(bloomFlower(arr , 3 , 13));
+        //System.out.println(bloomFlower(arr , 3 , 13));
+        System.out.println(findKthPositive(arr , 6));
     }
     /*
     Given an array nums of n integers.
@@ -1239,5 +1240,74 @@ No day exceeds capacity 15 and all packages are shipped in order in 5 days.
             }
         }
         return days+1;
+    }
+    /*
+    Given a sorted array of unique positive integers arr, your task is to return the kᵗʰ missing positive number that is not present in arr.
+
+The array is guaranteed to be strictly increasing, and the missing numbers are those positive integers that do not appear in arr but would appear in a full sequence starting from 1.
+
+Example 1:
+Input: arr = [3, 5, 7, 10], k = 6
+Output: 9
+Explanation:
+The missing numbers are
+ [1, 2, 4, 6, 8, 9, 11, ...].
+  The 6ᵗʰ missing number is 9.
+     */
+    public static int findKthPositive2(int[] arr, int k) {
+        HashMap<Integer, Boolean> hs = new HashMap<>();
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        for(int i = 1 ; i <= max ; i++){
+            hs.put(i , false);
+        }
+        for(int i = 0 ; i < arr.length ; i++){
+            hs.put(arr[i] , true);
+        }
+        int v = 0;
+        int num = 1;
+        while(true){
+            if(v==k){
+                break;
+            }
+            if(hs.containsKey(num)){
+                if(!hs.get(num)){
+                    v++;
+                    num++;
+                }else{
+                    num++;
+                }
+            }else{
+                v++;
+                num++;
+            }
+        }
+        return num-1;
+    }
+    public static int findKthPositive(int[] arr, int k) {
+        int maxmissing = helper(arr , arr.length-1);
+        if(k>maxmissing){
+            return k-maxmissing+arr[arr.length-1];
+        }
+        int left = 0;
+        int right = arr.length-1;
+        int mid = (left+right)/2;
+        while (left<=right){
+            mid = (left+right)/2;
+            int req = helper(arr , mid);
+            if(req>=k){
+                right = mid-1;
+            }else {
+                left = mid+1;
+            }
+        }
+        return left;
+    }
+    public static int helper(int[] arr , int mid){
+        return arr[mid]-mid-1;
     }
 }
