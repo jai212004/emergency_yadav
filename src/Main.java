@@ -7,7 +7,7 @@ import static java.lang.Math.floor;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 5, 1};
+        int[] arr = {7, 7, 14, 7, 13, 11, 12, 7 , 12};
 //        System.out.println(arr[0]);
 //        System.out.println(arr[40]);
 //        System.out.println(arr[63]);
@@ -16,9 +16,10 @@ public class Main {
 //        System.out.println(arrr[0]);
 //        System.out.println(arrr[1]);
        // System.out.println(findPeakElement(arr));
-        System.out.println(floorSqrt(234));
-        System.out.println(power(5,2));
-        System.out.println(NthRoot(7 , 49));
+//        System.out.println(floorSqrt(234));
+//        System.out.println(power(5,2));
+//        System.out.println(NthRoot(3, 27));
+        System.out.println(bloomFlower(arr , 3 , 13));
     }
     /*
     Given an array nums of n integers.
@@ -1056,5 +1057,120 @@ Explanation: 6 is the square root of 36.
             }
         }
         return -1;
+    }
+    /*
+    Given two numbers N and M,
+     find the Nth root of M.
+     The Nth root of a number M is defined
+      as a number X such that when X is raised
+     to the power of N, it equals M.
+      If the Nth root is not an integer, return -1.
+Example 1:
+Input: N = 3, M = 27
+
+Output: 3
+
+Explanation: The cube root of 27 is equal to 3.
+     */
+    public int NthRoot2(int N, int M) {
+        int left = 1;
+        int right = M;
+        int mid = (left+right)/2;
+        while(left<=right){
+            mid = (left+right)/2;
+            int req = power(mid , N , M);
+            if(req==1){
+                return mid;
+            }else if(req==2){
+                right=mid-1;
+            }else if(req==0){
+                left=mid+1;
+            }
+        }
+        return -1;
+    }
+
+    public int power(int base , int power , int limit){
+        long res = 1;
+        int out = 0;
+        for(int i = 0 ; i < power ; i++){
+            res = res*base;
+            if(res>limit){
+                out = 2;
+                break;
+            }
+        }
+        if(res==limit){
+            out=1;
+        }
+        return out;
+    }
+    /*
+    Minimum days to make M bouquets
+
+
+84
+
+Pro
+
+Companies
+Given n roses and an array nums where nums[i] denotes that the 'ith' rose will bloom on the nums[i]th day,
+ only adjacent bloomed roses can be picked to make a bouquet.
+Exactly k adjacent bloomed roses are required to make a single bouquet.
+ Find the minimum number of days required to make at least m bouquets,
+each containing k roses. Return -1 if it is not possible.
+
+Example 1:
+Input: n = 8, nums = [7, 7, 7, 7, 13, 11, 12, 7],
+ m = 2, k = 3
+
+Output: 12
+
+Explanation: On the 12th the first 4 flowers and the
+last 3 flowers would have already bloomed. So, we can easily make 2 bouquets, one with the first 3 and another with the last 3 flowers.
+     */
+    public int roseGarden(int n, int[] nums, int k, int m) {
+        if((long)k*m>n){
+            return -1;
+        }
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for(int i = 0 ; i < nums.length ; i++){
+            if(nums[i]<min){
+                min = nums[i];
+            }
+            if(nums[i]>max){
+                max = nums[i];
+            }
+        }
+        int left = min;
+        int right = max;
+        int mid = (left+right)/2;
+        while (left<=right){
+            mid = (left+right)/2;
+            int noofBouq = bloomFlower(nums , k , mid);
+            if(noofBouq<m){
+                left=mid+1;
+            }else{
+                right=mid-1;
+            }
+        }
+        return left;
+    }
+    public static int bloomFlower(int[] nums , int noofflowinBouq , int days) {
+        int count = 0;
+        int noofbouqet = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if(nums[i]<=days){
+                count++;
+                if(count==noofflowinBouq){
+                    noofbouqet++;
+                    count=0;
+                }
+            }else{
+                count=0;
+            }
+        }
+        return noofbouqet;
     }
 }
