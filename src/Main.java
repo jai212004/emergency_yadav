@@ -1305,9 +1305,27 @@ The missing numbers are
                 left = mid+1;
             }
         }
-        return left;
+        if(left==0){
+            return k;
+        }else {
+            return arr[right] + k - helper(arr, right);
+        }
     }
     public static int helper(int[] arr , int mid){
         return arr[mid]-mid-1;
     }
+    /*
+    binary search ensures that at the end we are left with two sides left and right ,
+     where left satisfies one condition and right satisfies other like in this case
+    when left>right missing numbers till left were greater than equal to k - statement 1 , missing
+    numbers till right were less than k , so we do arr[right] + (total number of missing numbers we need - no of missing numbers we have till now)
+    which is (arr[right] + (k-helper(arr , right)) , helper(arr , right) = x , but mind didn't satisfy that k-x wont overshoot so
+    we need to check that k-x <= helper(arr , left) - helper(arr , right) , helper(arr , right) = x so k <= helper(arr,left)
+    then statement 1 comes into play proving the case , two case left when missing kth number is before the first element and other is
+    when the missing element is after last element , we handle the first case by checking whether left is 0 which means if left is 0
+    it means 0 is the first index where no of missing numbers are greater than equal to k , so right becomes -1 which when provided
+    to helper function will cause issue therefore when this happens , returning k would be sufficient as there is no wall struck the missing numbers
+    are consecutive and for the second case where k is greater than missing numbers at last index we do lastEle + k - x where k is
+    total number of missing numbers and x = helper(arr , arr.length-1)
+     */
 }
