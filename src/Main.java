@@ -1328,4 +1328,102 @@ The missing numbers are
     are consecutive and for the second case where k is greater than missing numbers at last index we do lastEle + k - x where k is
     total number of missing numbers and x = helper(arr , arr.length-1)
      */
+    public int paint(int A, int B, int[] C) {
+        int max = Integer.MIN_VALUE;
+        long sum = 0;
+        for(int i = 0 ; i < C.length ; i++){
+            if(C[i]>max){
+                max=C[i];
+            }
+            sum=sum+C[i];
+        }
+        long left = (long)max*B;
+        long right = (long)sum*B;
+        long mid = (left+right)/2;
+        while (left<=right){
+            mid = (left+right)/2;
+            int painter = help2(C , mid , B);
+            if(painter<=A){
+                right=mid-1;
+            }else{
+                left=mid+1;
+            }
+        }
+        return (int)(((long)left)%10000003);
+    }
+
+    public int help2(int[] arr , long cap , int time){
+        int painters = 0;
+        long sum = 0;
+        for(int i = 0 ; i < arr.length ; i++){
+            if((sum+arr[i])*time>cap){
+                painters++;
+                sum=arr[i];
+            }else{
+                sum=sum+arr[i];
+            }
+        }
+        return painters+1;
+    }
+    /*
+    You are given A painters and an array C of N integers where C[i] denotes the length of the ith board.
+     Each painter takes B units of time to paint 1 unit of board. You must assign boards to painters such that:
+
+Each painter paints only contiguous segments of boards.
+No board can be split between painters.
+The goal is to minimize the time to paint all boards.
+Return the minimum time required to paint all boards modulo 10000003.
+
+Example 1:
+Input: A = 2, B = 5, C = [1, 10]
+
+Output: 50
+
+Explanation:
+
+Painter 1 paints board 0 (length = 1), time = 5
+Painter 2 paints board 1 (length = 10), time = 50
+Max time = 50
+Return 50 % 10000003 = 50
+     */
+
+    public int findPages(int[] nums, int m) {
+        if(m>nums.length){
+            return -1;
+        }
+        int min = Integer.MAX_VALUE;
+        int sum = 0;
+        for(int i = 0 ; i < nums.length ; i++){
+            if(nums[i]<min){
+                min=nums[i];
+            }
+            sum=sum+nums[i];
+        }
+        int left = min;
+        int right = sum;
+        int mid = (left+right)/2;
+        while(left<=right){
+            mid = (left+right)/2;
+            int res = help3(nums , mid);
+            if(res<=m){
+                right = mid - 1;
+            }else{
+                left = mid + 1;
+            }
+        }
+    }
+
+    public int help3(int[] arr , int cap){
+        int chilren = 0;
+        int books = 0;
+        for(int i = 0 ; i < arr.length ; i++){
+            if(books+arr[i]>cap){
+                chilren++;
+                books=arr[i];
+            }else{
+                books=books+arr[i];
+            }
+        }
+        return chilren+1;
+    }
 }
