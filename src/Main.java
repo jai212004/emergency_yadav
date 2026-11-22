@@ -1391,15 +1391,15 @@ Return 50 % 10000003 = 50
         if(m>nums.length){
             return -1;
         }
-        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
         int sum = 0;
         for(int i = 0 ; i < nums.length ; i++){
-            if(nums[i]<min){
-                min=nums[i];
+            if(nums[i]>max){
+                max=nums[i];
             }
             sum=sum+nums[i];
         }
-        int left = min;
+        int left = max;
         int right = sum;
         int mid = (left+right)/2;
         while(left<=right){
@@ -1411,6 +1411,7 @@ Return 50 % 10000003 = 50
                 left = mid + 1;
             }
         }
+        return left;
     }
 
     public int help3(int[] arr , int cap){
@@ -1426,4 +1427,5 @@ Return 50 % 10000003 = 50
         }
         return chilren+1;
     }
+    /*Book Allocation: same as painters, lower bound is max, helper counts students*/
 }
