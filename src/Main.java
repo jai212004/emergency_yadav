@@ -1428,4 +1428,7 @@ Return 50 % 10000003 = 50
         return chilren+1;
     }
     /*Book Allocation: same as painters, lower bound is max, helper counts students*/
+    public int aggressiveCows(int[] nums, int k) {
+
+    }
 }
