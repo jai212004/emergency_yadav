@@ -1466,4 +1466,22 @@ Return 50 % 10000003 = 50
         }
         return noofcow;
     }
+    /*
+    Median of 2 sorted arrays
+
+Pro
+Given two sorted arrays arr1 and arr2 of size m and n
+ respectively,
+ return the median of the two sorted arrays.
+The median is defined as the middle value of
+ a sorted list of numbers.
+ In case the length of the list is even, the median is the
+  average of the two middle elements.
+     */
+    public double median(int[] arr1, int[] arr2) {
+        int[] arr3 = new int[arr1.length+arr2.length];
+        for(int i = 0 ; i < arr3.length ; i++){
+            if()
+        }
+    }
 }
