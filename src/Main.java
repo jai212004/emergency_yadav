@@ -1451,7 +1451,7 @@ Return 50 % 10000003 = 50
                 right=mid-1;
             }
         }
-        return left;
+        return right;
     }
 
     public static int retDis(int[] arr , int dist){
