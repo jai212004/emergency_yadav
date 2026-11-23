@@ -1480,8 +1480,13 @@ The median is defined as the middle value of
      */
     public double median(int[] arr1, int[] arr2) {
         int[] arr3 = new int[arr1.length+arr2.length];
-        for(int i = 0 ; i < arr3.length ; i++){
-            if()
+        int req = 0;
+        int max1 = arr1[arr1.length-1];
+        int max2 = arr2[arr2.length-1];
+        int min1 = arr1[0];
+        int min2 = arr2[0];
+        if(max2>max1){
+
         }
     }
 }
