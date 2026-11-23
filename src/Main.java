@@ -7,7 +7,8 @@ import static java.lang.Math.floor;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {3, 5, 7, 10};
+        int[] arr = {4, 2, 1, 3, 6};
+        System.out.println(aggressiveCows(arr , 2));
 //        System.out.println(arr[0]);
 //        System.out.println(arr[40]);
 //        System.out.println(arr[63]);
@@ -1428,7 +1429,41 @@ Return 50 % 10000003 = 50
         return chilren+1;
     }
     /*Book Allocation: same as painters, lower bound is max, helper counts students*/
-    public int aggressiveCows(int[] nums, int k) {
+    public static int aggressiveCows(int[] nums, int k) {
+        Arrays.sort(nums);
+        if(k>nums.length || k<2){
+            return -1;
+        }
+        int left = Integer.MAX_VALUE;
+        int right = nums[nums.length-1]-nums[0];
+        for(int i = 0 ; i < nums.length-1 ; i++){
+            int low = nums[i+1]-nums[i];
+            if(low<left){
+                left=low;
+            }
+        }
+        while (left<=right){
+            int mid = (left+right)/2;
+            int noofcow = retDis(nums , mid);
+            if(noofcow>=k){
+                left=mid+1;
+            }else{
+                right=mid-1;
+            }
+        }
+        return left;
+    }
 
+    public static int retDis(int[] arr , int dist){
+        //returning no of cows
+        int noofcow = 1;
+        int indexofcow = 0;
+        for(int i = 1 ; i < arr.length ; i++){
+            if(arr[i]-arr[indexofcow]>=dist){
+                indexofcow=i;
+                noofcow++;
+            }
+        }
+        return noofcow;
     }
 }
