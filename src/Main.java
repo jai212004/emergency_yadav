@@ -1614,7 +1614,7 @@ Explanation: The target = 8
             mid = (left+right)/2;
             if(arr[mid]==target){
                 return true;
-            }else if(target>mid){
+            }else if(target>arr[mid]){
                 left=mid+1;
             }else{
                 right=mid-1;
