@@ -7,23 +7,14 @@ import static java.lang.Math.floor;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {4, 2, 1, 3, 6};
-        System.out.println(aggressiveCows(arr , 2));
-//        System.out.println(arr[0]);
-//        System.out.println(arr[40]);
-//        System.out.println(arr[63]);
-//        System.out.println(arr[65]);
-//        int [] arrr = twoSum2(arr , -14);
-//        System.out.println(arrr[0]);
-//        System.out.println(arrr[1]);
-       // System.out.println(findPeakElement(arr));
-//        System.out.println(floorSqrt(234));
-//        System.out.println(power(5,2));
-//        System.out.println(NthRoot(3, 27));
-        //System.out.println(bloomFlower(arr , 3 , 13));
-        System.out.println(findKthPositive(arr , 6));
-        int[][] arre = new int[2][4];
-        System.out.println(arre.length);
+        int[][] arr = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
+//        for(int i = 0 ; i < arre.length ; i++){
+//            for(int j = i ; j < arre[i].length; j++){
+//                System.out.println(arre[i][j]);
+//            }
+//        }
+
+        System.out.println(searchMatrix(arr , 9));
     }
     /*
     Given an array nums of n integers.
@@ -1514,22 +1505,121 @@ Output: 0
 Explanation: The row with the maximum number
 of ones is 0 (0 - indexed).
      */
-    public static int rowWithMax1s(int[][] mat) {
-        int max = Integer.MIN_VALUE;
-        int count = 0;
-        int row = 0;
+//    public static int rowWithMax1s(int[][] mat) {
+//        int max = Integer.MIN_VALUE;
+//        int count = 0;
+//        int row = -1;
+//        for(int i = 0 ; i < mat.length ; i++){
+//            for(int j = 0 ; j < mat[i].length ; j++){
+//                if(mat[i][j]==1){
+//                    count++;
+//                }
+//            }
+//            if(count>max && count!=0){
+//                max=count;
+//                row = i;
+//            }count=0;
+//        }
+//        return row;
+//    }
+    public static int rowWithMax1s(int[][] mat){
+        int max = -1;
+        int row = -1;
         for(int i = 0 ; i < mat.length ; i++){
-            for(int j = 0 ; j < i ; j++){
-                if(mat[i][j]==1){
-                    count++;
-                }
+            int first1 = binHelp(mat[i]);
+            if(first1==-1){
+                continue;
             }
+            int count = mat[i].length-first1;
             if(count>max){
                 max=count;
-                row = i;
-                count=0;
+                row=i;
             }
         }
         return row;
+    }
+    public static int binHelp(int[] row) {
+        int left = 0;
+        int right = row.length-1;
+        int mid = (left + right) / 2;
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (row[mid] == 1) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        if(left>row.length-1){
+            return -1;
+        }
+        else{
+            return left;
+        }
+    }
+    /*
+    Search in a 2D Matrix
+
+
+49
+
+Core
+
+Companies
+Given a 2-D array mat where the elements
+of each row are sorted in non-decreasing order,
+and the first element of a row is greater than
+the last element of the previous row (if it exists),
+ and an integer target, determine if the target
+ exists in the given mat or not.
+
+Example 1:
+Input: mat = [ [1, 2, 3, 4],
+ [5, 6, 7, 8],
+  [9, 10, 11, 12] ], target = 8
+
+Output: True
+
+Explanation: The target = 8
+ exists in the 'mat' at index (1, 3).
+     */
+    public static boolean searchMatrix(int[][] mat, int target) {
+        int left = 0;
+        int right = mat.length-1;
+        int mid = (left+right)/2;
+        while (left<=right){
+            mid = (left+right)/2;
+            int low = mat[mid][0];
+            int high = mat[mid][mat[mid].length-1];
+            if(low==target){
+                return true;
+            }if(target==high){
+                return true;
+            }
+            if(target>low && target<high){
+                return searchinRow(mat[mid] , target);
+            }else if(target<low){
+                right=mid-1;
+            }else if(target>high){
+                left=mid+1;
+            }
+        }
+        return false;
+    }
+    public static boolean searchinRow(int[] arr , int target){
+        int left = 0;
+        int right = arr.length-1;
+        int mid = (left+right)/2;
+        while(left<=right){
+            mid = (left+right)/2;
+            if(arr[mid]==target){
+                return true;
+            }else if(target>mid){
+                left=mid+1;
+            }else{
+                right=mid-1;
+            }
+        }
+        return false;
     }
 }
