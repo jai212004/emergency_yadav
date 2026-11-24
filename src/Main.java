@@ -13,8 +13,8 @@ public class Main {
 //                System.out.println(arre[i][j]);
 //            }
 //        }
-
-        System.out.println(searchMatrix(arr , 9));
+        int[] arrr = {1,2,3,4,5};
+        System.out.println(largestSubarraySumMinimized(arrr , 3));
     }
     /*
     Given an array nums of n integers.
@@ -1706,7 +1706,7 @@ The best way to do this is to split the array
 a[] into [1, 2, 3], [4], and [5], where the
 largest sum among the three subarrays is only 6.
      */
-    public int largestSubarraySumMinimized(int[] a, int k) {
+    public static int largestSubarraySumMinimized(int[] a, int k) {
         int max = Integer.MIN_VALUE;
         int sum = 0;
         for(int i = 0 ; i < a.length ; i++){
@@ -1720,10 +1720,18 @@ largest sum among the three subarrays is only 6.
         while(left<=right){
             int mid = (left+right)/2;
             int noofel = helping(a , mid);
-            if(noofel>k)
+            if(noofel==-1){
+                continue;
+            }
+            if(noofel>k){
+                left=mid+1;
+            }else{
+                right=mid-1;
+            }
         }
+        return left;
     }
-    public int helping(int[] nums , int capSum){
+    public static int helping(int[] nums , int capSum){
         int sum = 0;
         int noofel = 0;
         for(int i = 0 ; i < nums.length ; i++){
@@ -1733,6 +1741,9 @@ largest sum among the three subarrays is only 6.
             }else{
                 sum=sum+nums[i];
             }
+        }
+        if(noofel+1>nums.length){
+            return -1;
         }
         return noofel+1;
     }
