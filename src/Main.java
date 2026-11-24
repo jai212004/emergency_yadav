@@ -1747,4 +1747,15 @@ largest sum among the three subarrays is only 6.
         }
         return noofel+1;
     }
+    /*
+Given two sorted arrays arr1 and arr2 of size
+m and n respectively, return the median of the two sorted arrays.
+
+The median is defined as the middle value of a sorted list
+ of numbers. In case the length of the list is even,
+  the median is the average of the two middle elements.
+Example 1:
+Input: arr1 = [2, 4, 6], arr2 = [1, 3, 5]
+Output: 3.5
+     */
 }
