@@ -13,8 +13,9 @@ public class Main {
 //                System.out.println(arre[i][j]);
 //            }
 //        }
-        int[] arrr = {1,2,3,4,5};
-        System.out.println(largestSubarraySumMinimized(arrr , 3));
+        int[] arr1 = {1,4,5,9};
+        int[] arr2 = {2,3,6,11};
+        System.out.println(kthElement(arr1 , arr2 , 2));
     }
     /*
     Given an array nums of n integers.
@@ -1758,4 +1759,91 @@ Example 1:
 Input: arr1 = [2, 4, 6], arr2 = [1, 3, 5]
 Output: 3.5
      */
+    public static double median1(int[] arr1, int[] arr2) {
+        int left = 0;
+        int right = 0;
+        int count = 0;
+        int prev = 0;
+        int current = 0;
+        while(true){
+            if(count==((arr1.length+arr2.length)/2)+1){
+                break;
+            }
+            if(left>arr1.length-1){
+                prev=current;
+                current=arr2[right];
+                right++;
+                count++;
+            }else if(right>arr2.length-1){
+                prev=current;
+                current=arr1[left];
+                count++;
+                left++;
+            }
+            else if(arr1[left]<arr2[right]){
+                prev=current;
+                current=arr1[left];
+                count++;
+                left++;
+            }else{
+                prev=current;
+                current=arr2[right];
+                right++;
+                count++;
+            }
+        }
+        if((arr1.length+arr2.length)%2==1){
+            return current;
+        }else{
+            return (double) (prev + current) /2;
+        }
+    }
+    /*
+    Kth element of 2 sorted arrays
+
+Pro
+Given two sorted arrays a and b of size m and n
+ respectively.
+Find the kth element of the final sorted array.
+
+Example 1:
+Input: a = [2, 3, 6, 7, 9], b = [1, 4, 8, 10], k = 5
+
+Output: 6
+
+Explanation: The final sorted array would
+be [1, 2, 3, 4, 6, 7, 8, 9, 10]. The 5th
+element of this array is 6.
+     */
+    public static int kthElement(int[] a, int[] b, int k) {
+        int left = 0;
+        int right = 0;
+        int count = 0;
+        int prev = 0;
+        int current = 0;
+        while(count!=k){
+            if(left>a.length-1){
+                prev=current;
+                current=b[right];
+                right++;
+                count++;
+            }else if(right>b.length-1){
+                prev=current;
+                current=a[left];
+                left++;
+                count++;
+            } else if (a[left]<b[right]) {
+                prev=current;
+                current=a[left];
+                left++;
+                count++;
+            }else{
+                prev=current;
+                current=b[right];
+                right++;
+                count++;
+            }
+        }
+        return current;
+    }
 }
