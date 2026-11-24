@@ -1682,9 +1682,58 @@ Explanation: The target 5 exists in the matrix
             }else if(element>target){
                 column--;
             }else{
-                ;
+                noofrows++;
             }
         }
         return false;
+    }
+    /*
+    Split array - largest sum
+
+Pro
+Given an integer array a of size n
+and an integer k. Split the array a
+into k non-empty subarrays such that
+the largest sum of any subarray is minimized.
+Return the minimized largest
+ sum of the split.
+Example 1:
+Input: a = [1, 2, 3, 4, 5], k = 3
+Output:6
+Explanation: There are many ways to split
+the array a[] into k consecutive subarrays.
+The best way to do this is to split the array
+a[] into [1, 2, 3], [4], and [5], where the
+largest sum among the three subarrays is only 6.
+     */
+    public int largestSubarraySumMinimized(int[] a, int k) {
+        int max = Integer.MIN_VALUE;
+        int sum = 0;
+        for(int i = 0 ; i < a.length ; i++){
+            if(a[i]>max){
+                max=a[i];
+            }
+            sum = sum+a[i];
+        }
+        int left = max;
+        int right = sum;
+        while(left<=right){
+            int mid = (left+right)/2;
+            int noofel = helping(a , mid);
+            if(noofel>k)
+        }
+    }
+    public int helping(int[] nums , int capSum){
+        int sum = 0;
+        int noofel = 0;
+        for(int i = 0 ; i < nums.length ; i++){
+            if(nums[i]+sum>capSum){
+                noofel++;
+                sum=nums[i];
+            }else{
+                sum=sum+nums[i];
+            }
+        }
+        return noofel+1;
     }
 }
