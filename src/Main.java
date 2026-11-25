@@ -1862,7 +1862,7 @@ The median is defined as the middle value of a sorted list of numbers.
         }
         int low = 0;
         int high = arr1.length;
-        int mid = (low+high+1)/2;
+        int mid = (arr1.length+arr2.length+1)/2;
         while (low<=high){
             int mid1 = (low+high)/2;
             int mid2 = mid-mid1;
@@ -1879,7 +1879,17 @@ The median is defined as the middle value of a sorted list of numbers.
             }if(mid2<arr2.length){
                 r2=arr2[mid2];
             }
-            if(l1>)
+            if(l1<=r2 && l2<=r1){
+                if((arr1.length+arr2.length)%2==1){
+                    return Math.max(l1,l2);
+                }
+                return (double) (Math.max(l1, l2) + Math.min(r1, r2)) /2;
+            }if(l1>r2){
+                high=mid1-1;
+            }else{
+                low=mid1+1;
+            }
         }
+        throw new IllegalArgumentException("Input arrays are not sorted");
     }
 }
