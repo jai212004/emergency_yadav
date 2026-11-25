@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.Math.floor;
+import static java.lang.Math.min;
 
 public class Main {
     public static void main(String[] args) {
@@ -1472,7 +1473,7 @@ The median is defined as the middle value of
  In case the length of the list is even, the median is the
   average of the two middle elements.
      */
-    public double median(int[] arr1, int[] arr2) {
+    public double median3(int[] arr1, int[] arr2) {
         int[] arr3 = new int[arr1.length+arr2.length];
         int req = 0;
         int max1 = arr1[arr1.length-1];
@@ -1845,5 +1846,40 @@ element of this array is 6.
             }
         }
         return current;
+    }
+    /*
+    Median of 2 sorted arrays
+
+Pro
+Given two sorted arrays arr1 and arr2 of size m and n respectively,
+ return the median of the two sorted arrays.
+The median is defined as the middle value of a sorted list of numbers.
+ In case the length of the list is even, the median is the average of the two middle elements.
+     */
+    public static double median(int[] arr1, int[] arr2) {
+        if(arr1.length>arr2.length){
+            return median(arr2,arr1);
+        }
+        int low = 0;
+        int high = arr1.length;
+        int mid = (low+high+1)/2;
+        while (low<=high){
+            int mid1 = (low+high)/2;
+            int mid2 = mid-mid1;
+            int l1 = Integer.MIN_VALUE;
+            int l2 = Integer.MIN_VALUE;
+            int r1 = Integer.MAX_VALUE;
+            int r2 = Integer.MAX_VALUE;
+            if(mid1>0){
+                l1=arr1[mid1-1];
+            }if(mid1<arr1.length){
+                r1=arr1[mid1];
+            }if(mid2>0){
+                l2=arr2[mid2-1];
+            }if(mid2<arr2.length){
+                r2=arr2[mid2];
+            }
+            if(l1>)
+        }
     }
 }
