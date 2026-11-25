@@ -1890,6 +1890,6 @@ The median is defined as the middle value of a sorted list of numbers.
                 low=mid1+1;
             }
         }
-        throw new IllegalArgumentException("Input arrays are not sorted");
+        throw new IllegalArgumentException("Input arrays are not sorted.");
     }
 }
