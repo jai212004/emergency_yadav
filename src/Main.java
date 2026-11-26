@@ -1899,7 +1899,7 @@ The median is defined as the middle value of a sorted list of numbers.
         }
         int low = 0;
         int high = arr1.length;
-        int mid = (arr1.length+arr2.length)/2;
+        int mid = (arr1.length+arr2.length+1)/2;
         while (low<=high){
             int mid1 = (low+high)/2;
             int mid2 = mid-mid1;
@@ -1912,7 +1912,7 @@ The median is defined as the middle value of a sorted list of numbers.
             }if(mid1<arr1.length){
                 r1=arr1[mid1];
             }if(mid2>0){
-                r1=arr2[mid2-1];
+                l2=arr2[mid2-1];
             }if(mid2<arr2.length){
                 r2=arr2[mid2];
             }
@@ -1929,5 +1929,60 @@ The median is defined as the middle value of a sorted list of numbers.
             }
         }
         throw new IllegalArgumentException("error");
+    }
+    /*
+570. Median of a Row Wise Sorted Matrix
+Core
+Given an m x n matrix grid containing an odd number of integers
+ where each row is sorted in non-decreasing order,
+  return the median of the matrix.
+You must solve the problem in less than
+ O(m * n) time complexity.
+Example 1:
+Input: grid = [[1,1,2],[2,3,3],[1,3,4]]
+Output: 2
+Explanation: The elements of the matrix in
+ sorted order are 1,1,1,2,2,3,3,3,4. The median is 2.
+     */
+    public int matrixMedian(int[][] grid) {
+        int low = Integer.MAX_VALUE;
+        int high = Integer.MIN_VALUE;
+        int sum = grid.length*grid[0].length;
+        int needed = 0;
+        if(sum%2==1){
+            needed = (sum+1)/2;
+        }else{
+            needed = sum/2;
+        }
+        for(int i = 0 ; i < grid.length ; i++){
+            low = Math.min(grid[i][0] , low);
+            high = Math.max(grid[i][grid[i].length-1] , high);
+        }
+        while (low<=high){
+            int count = 0;
+            int mid = (low+high)/2;
+            for (int i = 0 ; i < grid.length ; i++){
+                count = count + countLessorEqual(grid[i] , mid);
+            }
+            if(count<needed){
+                low = mid + 1;
+            }else{
+                high = mid - 1;
+            }
+        }
+        return low;
+    }
+    public int countLessorEqual(int[] arr , int mid){
+        int low = 0;
+        int high = arr.length-1;
+        while (low<=high){
+            int mid1 = (low+high)/2;
+            if(arr[mid1]>mid){
+                high=mid1-1;
+            }else{
+                low=mid1+1;
+            }
+        }
+        return low;
     }
 }
