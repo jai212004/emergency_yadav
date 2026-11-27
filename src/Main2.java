@@ -96,4 +96,19 @@ public class Main2 {
         }
         return low;
     }
+    public int findMedian(int[][] matrix) {
+        int low = Integer.MAX_VALUE;
+        int high = Integer.MIN_VALUE;
+        for(int i = 0 ; i < matrix.length ; i++){
+            low = Math.min(low , matrix[i][0]);
+            high = Math.max(high , matrix[i][matrix[i].length-1]);
+        }
+        while (low<=high){
+            int mid = (low+high)/2;
+            int count = 0;
+            for(int i = 0 ; i < matrix.length ; i++){
+
+            }
+        }
+    }
 }
