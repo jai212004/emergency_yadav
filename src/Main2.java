@@ -101,7 +101,7 @@ public class Main2 {
         int high = Integer.MIN_VALUE;
         int sum = matrix.length*matrix[0].length;
         int needed = 0;
-        if(sum*2==1){
+        if(sum%2==1){
             needed=(sum+1)/2;
         }else{
             needed=(sum/2);
@@ -116,14 +116,25 @@ public class Main2 {
             for(int i = 0 ; i < matrix.length ; i++){
                 count = count+countLessThanEqual(matrix[i] , mid);
             }
-
+            if(count<needed){
+                low=mid+1;
+            }else{
+                high=mid-1;
+            }
         }
+        return low;
     }
     public int countLessThanEqual(int[] arr , int target){
         int low = 0;
         int high = arr.length-1;
         while(low<=high){
-
+            int mid = (low+high)/2;
+            if(arr[mid]>target){
+                high = mid - 1;
+            }else{
+                low = mid + 1;
+            }
         }
+        return low;
     }
 }
