@@ -96,15 +96,32 @@ Find the minimum value of dist.
     }
 
     public int[] findPeakGrid(int[][] mat) {
+        int rows = mat.length;
+        int column = mat[0].length;
         for(int i = 0 ; i < mat.length ; i++){
             for(int j = 0 ; j < mat[i].length ; j++){
-                int left
-                if(i==0){//first row
-                    if(j==0){
-
-                    }
+                int element = mat[i][j];
+                int up = Integer.MIN_VALUE;
+                if(i>0){
+                    up=i-1;
+                }
+                int down = Integer.MIN_VALUE;
+                if(i<rows-1){
+                    down=i+1;
+                }
+                int left = Integer.MIN_VALUE;
+                if(j>0){
+                    left=j-1;
+                }
+                int right = Integer.MIN_VALUE;
+                if(j<column-1){
+                    right=j+1;
+                }
+                if(element>right && element>up && element>left && element>down){
+                    return new int[]{i , j};
                 }
             }
         }
+        return new int[]{-1 , -1};
     }
 }
