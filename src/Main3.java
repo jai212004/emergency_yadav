@@ -67,7 +67,7 @@ Find the minimum value of dist.
 
     public double minimiseMaxDistance(int[] arr, int k) {
         double low = 0;
-        dou high = Integer.MIN_VALUE;
+        double high = 0;
         for(int i = 1 ; i < arr.length ; i++){
             int dist = arr[i]-arr[i-1];
             if(dist>high){
@@ -76,21 +76,35 @@ Find the minimum value of dist.
         }
         while (high-low>=1e-7){
             double mid = (low+high)/2;
-            int stat = noOfstat(arr , mid);
+            long stat = noOfstat(arr , mid);
             if(stat>k){
                 low=mid;
             }else{
                 high=mid;
             }
         }
+        return high;
     }
 
-    public int noOfstat(int[] arr , double k){
-        int count = 0;
+    public long noOfstat(int[] arr , double k){
+        long count = 0;
         for(int i = 1 ; i < arr.length ; i++){
             double gap = arr[i] - arr[i-1];
-            count = (int) (count + (Math.ceil(gap/k)-1));
+            count = (long) (count + (Math.ceil(gap/k)-1));
         }
         return count;
+    }
+
+    public int[] findPeakGrid(int[][] mat) {
+        for(int i = 0 ; i < mat.length ; i++){
+            for(int j = 0 ; j < mat[i].length ; j++){
+                int left
+                if(i==0){//first row
+                    if(j==0){
+
+                    }
+                }
+            }
+        }
     }
 }
